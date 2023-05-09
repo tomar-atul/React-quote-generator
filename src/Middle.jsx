@@ -8,11 +8,16 @@ const Middle = () => {
     //   fetch
     // },[])
     const getQuote = async () => {
-      let response = await fetch("https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en")
+      let response = await fetch("https://api.quotable.io/quotes/random")
       let data =await response.json()
-      console.log(data?.quoteAuthor,"\n",data?.quoteText);
-      setQuoteText(data.quoteText)
-     setQuoteAuthor(data.quoteAuthor? data.quoteAuthor:"unknown")
+      console.log(data[0].author)
+      console.log(data[0]?.author,"\n",data[0]?.content);
+      setQuoteText(data[0].content)
+     setQuoteAuthor(data[0].author? data[0].author:"unknown")
+      }
+      const setToCopy = () => {
+        let data = navigator.clipboard.writeText(`${quoteText} by "${quoteAuthor}"`)
+        data.then(()=>{console.log("copied")})
       }
   return (
     <div>
@@ -42,7 +47,10 @@ const Middle = () => {
             <button>
             <i className="fa-solid fa-share-nodes"></i>
             </button>
-            <button>
+            <button onClick={()=>{
+              let data = navigator.clipboard.writeText(`${quoteText} by "${quoteAuthor}"`)
+              data.then(()=>{console.log("copied")})
+            }}>
               <i className="fa-solid fa-copy" />
             </button>
           </div>
