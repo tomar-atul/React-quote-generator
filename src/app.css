@@ -1,6 +1,9 @@
 :root {
   --main-bg-color: #4161d8;
 }
+* {
+  margin: 0;
+}
 #root {
   position: relative;
 }
@@ -15,6 +18,7 @@ body {
   text-align: center;
   font-family: "Roboto", sans-serif;
   font-size: 2rem;
+  margin: 10px 0;
 }
 .center {
   background-color: rgba(255, 255, 255, 0.2);
@@ -26,6 +30,9 @@ body {
   border-radius: 10px;
   padding: 20px;
   margin-top: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .center > p {
   font-weight: bold;
@@ -41,7 +48,15 @@ body {
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.5rem;
   margin: 10px 0px;
-  width: 95%;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+.quote-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 .author {
   color: #ffffff;
@@ -60,6 +75,9 @@ body {
 .functions > div {
   display: flex;
   gap: 5px;
+}
+.buttons {
+  width: 100%;
 }
 .functions button {
   margin: 0 5px;
@@ -151,12 +169,14 @@ body {
   color: white;
   font-size: 2.5rem;
   margin-left: 3%;
+  align-self: flex-start;
 }
 .quote-close {
   display: flex;
   align-items: end;
   justify-content: end;
   margin-right: 3%;
+  align-self: flex-end;
 }
 .fa-circle-plus {
   background-color: red;

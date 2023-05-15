@@ -5,17 +5,20 @@ import Loader from "./Loader";
 const Middle = () => {
   const [quoteText, setQuoteText] = useState("loading...");
   const [quoteAuthor, setQuoteAuthor] = useState("loading...");
+  const [isLoading, setIsLoading] = useState(false);
   const [bgCssColor, setBgColor] = useState("#4161d8");
   useEffect(() => {
     getQuote();
   }, []);
   const getQuote = async () => {
+    setIsLoading(true);
     let response = await fetch("https://api.quotable.io/quotes/random");
     let data = await response.json();
     console.log(data[0].author);
     console.log(data[0]?.author, "\n", data[0]?.content);
     setQuoteText(data[0].content);
     setQuoteAuthor(data[0].author ? data[0].author : "unknown");
+    setIsLoading(false);
   };
   const setToCopy = () => {
     let data = navigator.clipboard.writeText(
@@ -38,10 +41,15 @@ const Middle = () => {
     // console.log(bgColor.getPropertyValue);
     setBgColor(color);
   };
+  const share = () => {
+    let text = `${quoteText} by ${quoteAuthor}`;
+    navigator.share({
+      text: text,
+    });
+  };
   const notify = () => toast("Here is your toast.");
   return (
     <>
-      <Loader bgColor={bgCssColor} />
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="made-by">
@@ -49,23 +57,27 @@ const Middle = () => {
       </div>
       <div className="center">
         <p> Quotes Generator</p>
-        <div className="quote-box">
-          <div className="quote-open quote-icon">
-            <i className="fa-solid fa-quote-left" />
+        {isLoading ? (
+          <Loader bgColor={bgCssColor} />
+        ) : (
+          <div className="quote-box">
+            <div className="quote-open quote-icon">
+              <i className="fa-solid fa-quote-left" />
+            </div>
+            <p className="quote-text">{quoteText}</p>
+            <div className="quote-close quote-icon">
+              <i className="fa-solid fa-quote-right" />
+            </div>
+            <div className="author">{quoteAuthor}</div>
           </div>
-          <p className="quote-text">{quoteText}</p>
-          <div className="quote-close quote-icon">
-            <i className="fa-solid fa-quote-right" />
-          </div>
-        </div>
-        <div className="author">{quoteAuthor}</div>
+        )}
         <div className="buttons">
           <div className="functions">
             <div>
               <button onClick={speech}>
                 <i className="fa-solid fa-volume-high" />
               </button>
-              <button>
+              <button onClick={share}>
                 <i className="fa-solid fa-share-nodes"></i>
               </button>
               <button

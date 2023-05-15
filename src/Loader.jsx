@@ -6,6 +6,7 @@ const Loader = (props) => {
       visible={true}
       height="80"
       width="80"
+      position="center"
       ariaLabel="comment-loading"
       wrapperStyle={{}}
       wrapperClass="comment-wrapper"
